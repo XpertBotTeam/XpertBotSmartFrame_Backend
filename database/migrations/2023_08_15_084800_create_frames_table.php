@@ -15,6 +15,10 @@ class CreateFramesTable extends Migration
     {
         Schema::create('frames', function (Blueprint $table) {
             $table->id();
+            $table->integer('frame_type');
+            $table->string('image_path');
+            $table->text('description')->nullable();
+            $table->decimal('price',10,2);
             $table->timestamps();
         });
     }

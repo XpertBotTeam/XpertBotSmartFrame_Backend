@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Picture extends Model
 {
     use HasFactory;
+
+    public function customizedArt(){
+        return $this->belongsTo(CustomizedArt::class);
+    }
 }

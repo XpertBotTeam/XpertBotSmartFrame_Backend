@@ -17,8 +17,8 @@ class CreatePictureTable extends Migration
             $table->id();
             $table->integer('picture_type');
             $table->string('image_path');
-            $table->text('description');
-            $table->integer('price');
+            $table->text('description')->nullable();
+            $table->decimal('price',10,2);
             $table->timestamps();
         });
     }

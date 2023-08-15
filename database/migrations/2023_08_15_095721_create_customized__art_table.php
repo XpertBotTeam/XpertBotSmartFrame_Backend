@@ -15,6 +15,13 @@ class CreateCustomizedArtTable extends Migration
     {
         Schema::create('customized__art', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('frame_id')->constrained()->onDelete('cascade')->nullable();
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('picture_id')->constrained()->onDelete('cascade')->nullable();
+            $table->float('width');
+            $table->float('height');
+            $table->float('background_size');
+            $table->decimal('price',10,2);
             $table->timestamps();
         });
     }
