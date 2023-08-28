@@ -46,9 +46,11 @@ class AuthController extends Controller
         if(is_null($user))
         {
             $user = new User();
-            $user->name = $request->name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
+            $user->user_role = 1;
             $user->save();
 
             $token = $user->createToken('authToken')->plainTextToken;
