@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
     public function login(Request $request){
-        // Log::info("testtttt");
+    
         $credentials = $request->only(['email', 'password']);
 
         if(Auth::attempt($credentials))
@@ -38,9 +38,6 @@ class AuthController extends Controller
 
     public function register(Request $request){
 
-        // Log::info("testtttt");
-        // Log::info($request);
-            // dd($request->all());
         $user = User::where('email', $request->email)->first();
 
         if(is_null($user))

@@ -9,6 +9,9 @@ class Picture extends Model
 {
     use HasFactory;
 
+    
+    protected $table='picture';
+
     public function customizedArt(){
         return $this->belongsTo(CustomizedArt::class);
     }

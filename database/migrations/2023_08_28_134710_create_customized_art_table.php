@@ -15,9 +15,9 @@ class CreateCustomizedArtTable extends Migration
     {
         Schema::create('customized__art', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('frame_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->foreignId('picture_id')->constrained()->onDelete('cascade')->nullable();
+            $table->integer('frame_id')->nullable();
+            $table->integer('order_id')->nullable();
+            $table->integer('picture_id')->nullable();
             $table->float('width');
             $table->float('height');
             $table->float('background_size');
@@ -33,6 +33,6 @@ class CreateCustomizedArtTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customized__art');
+        Schema::dropIfExists('customized_art');
     }
 }

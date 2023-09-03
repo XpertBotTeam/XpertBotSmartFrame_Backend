@@ -18,7 +18,7 @@ class CreateFramesTable extends Migration
             $table->integer('frame_type');
             $table->string('image_path');
             $table->text('description')->nullable();
-            $table->decimal('price',10,2);
+            $table->bigInteger('price');
             $table->timestamps();
         });
     }
