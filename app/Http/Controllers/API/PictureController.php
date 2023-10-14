@@ -11,33 +11,45 @@ class PictureController extends Controller
 {
     
     public function getAllPictures(){
+        Log::info("get picturess");
+      
         return Picture::all();
     }
 
     public function addPicture(Request $request){
         
-        Log::info("addPicture");
-      
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $attachment = time() . "_" . trim($file->getClientOriginalName());
-        //     $dirProd = public_path('/uploads/seeker_jobs/');
-        //     $file->move($dirProd, $atachment);
-        // }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            // $attachment = time() . "_" . trim($file->getClientOriginalName());
+            // $dirProd = public_path('/uploads/seeker_jobs/');
+            // $file->move($dirProd, $atachment);
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads\pictures'), $imageName);
 
-        $picture = new Picture();
-        $picture->picture_type = $request->picture_type;
-        $picture->image_path = "p/kk";
-        $picture->description = $request->description;
-        $picture->price = $request->price;
-        $picture->save();
+            $picture = new Picture();
+            $picture->picture_type = $request->picture_type;
+            $picture->image_path = "/uploads/pictures/".$imageName;
+            $picture->description = $request->description;
+            $picture->price = $request->price;
+            $picture->save();
 
-        return response()->json(
-            [
-                'success'=>true,
-                'message'=>'Pictured added successfully'
-            ]
+            return response()->json(
+                [
+                    'success'=>true,
+                    'message'=>'Picture added successfully'
+                ]
             );
+
+        }else{
+            return response()->json(
+                [
+                    'success'=>false,
+                    'message'=>'Picture not found'
+                ]
+            );
+        }
+
+        
     }
 
     public function deletePicture($id){
