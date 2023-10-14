@@ -82,25 +82,32 @@ class PictureController extends Controller
             );
         }
 
+        if ($request->hasFile('image')) {
+                        
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads\pictures'), $imageName);
+            
+            $picture->picture_type = $request->picture_type;
+            $picture->image_path = "/uploads/pictures/".$imageName;
+            $picture->description = $request->description;
+            $picture->price = $request->price;
+            $picture->save();
 
-        // if ($request->hasFile('file')) {
-        //     // if ($picture->image_path) {
-        //     //     Storage::delete($picture->image_path);
-        //     // }
-        //     // $data['image_path'] = $request->file('file')->store('uploads');
-        // }
+            return response()->json(
+                [
+                    'success'=>true,
+                    'message'=>'Pictured updated successfully'
+                ]
+            );
+        }else{
+            return response()->json(
+                [
+                    'success'=>false,
+                    'message'=>'Cannot update the picture'
+                ]
+            );
+        }
 
-        $picture->picture_type = $request->picture_type;
-        $picture->image_path = "uppp";
-        $picture->description = $request->description;
-        $picture->price = $request->price;
-        $picture->save();
-
-        return response()->json(
-            [
-                'success'=>true,
-                'message'=>'Pictured updated successfully'
-            ]
-        );
     }
 }
