@@ -7,12 +7,25 @@ use Illuminate\Http\Request;
 use App\Models\Picture;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class PictureController extends Controller
 {
     
     public function getAllPictures(){
-        return Picture::all();
+
+        $pictures = Picture::all();
+
+        foreach($pictures as $pic){
+            
+            $type = DB::table('lookup')
+                        ->where('display_name','=','picture_type')
+                        ->where('code','=',$pic->picture_type)->value('value');
+            
+            $pic->picture_type = $type;
+        }
+
+        return $pictures;
     }
 
     public function addPicture(Request $request){

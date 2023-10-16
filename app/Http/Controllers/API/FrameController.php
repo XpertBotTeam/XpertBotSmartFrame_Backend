@@ -7,11 +7,25 @@ use Illuminate\Http\Request;
 use App\Models\Frames;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class FrameController extends Controller
 {
     public function getAllFrames(){
-        return Frames::all();
+        // return Frames::all();
+
+        $frames = Frames::all();
+
+        foreach($frames as $frame){
+            
+            $type = DB::table('lookup')
+                        ->where('display_name','=','frame_type')
+                        ->where('code','=',$frame->frame_type)->value('value');
+            
+            $frame->frame_type = $type;
+        }
+
+        return $frames;
     }
 
     public function getFrameById($id){

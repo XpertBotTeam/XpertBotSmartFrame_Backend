@@ -22,6 +22,7 @@ use App\Http\Controllers\API\CustomizedArtController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
 
 Route::get('pictures', [PictureController::class, 'getAllPictures']);
 Route::post('addPicture', [PictureController::class, 'addPicture']);

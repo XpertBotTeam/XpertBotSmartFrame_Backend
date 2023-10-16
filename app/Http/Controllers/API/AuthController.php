@@ -18,6 +18,9 @@ class AuthController extends Controller
         {
             $user = Auth::user();
             $access_token = $user->createToken('authToken')->plainTextToken;
+            // Log::info($access_token);
+            $user->remember_token = $access_token;
+            $user->save();
             return response()->json(
                 [
                     'success'=>true,
@@ -68,5 +71,23 @@ class AuthController extends Controller
                 ]
                 );
         }
+    }
+
+    public function logout(Request $request){
+
+        // $user = $request->user();
+        // Log::info($user);
+        // $user->remember_token = null;
+        // $user->currentAccessToken()->delete();
+
+        // $request->user()->token()->revoke();
+
+        
+        Auth()->logout();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged out successfully',
+        ]);
     }
 }
