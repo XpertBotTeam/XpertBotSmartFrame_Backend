@@ -9,6 +9,8 @@ class Frames extends Model
 {
     use HasFactory;
 
+    protected $table='frames';
+
     public function customizedArt(){
         return $this->belongsTo(CustomizedArt::class);
     }

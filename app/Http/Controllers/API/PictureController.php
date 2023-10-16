@@ -12,8 +12,6 @@ class PictureController extends Controller
 {
     
     public function getAllPictures(){
-        Log::info("get picturess");
-      
         return Picture::all();
     }
 
@@ -23,14 +21,11 @@ class PictureController extends Controller
 
             $image = $request->file('image');
             $imageName = time() . "_" . trim($image->getClientOriginalName());
-            // $directory = public_path('/uploads/pictures/');
-            // $image->move($directory, $imageName);
-            
             Storage::putFileAs('public',$image, $imageName);
 
             $picture = new Picture();
             $picture->picture_type = $request->picture_type;
-            $picture->image_path = asset('public/storage/'.$imageName);//"/uploads/pictures/".$imageName;
+            $picture->image_path = asset('storage/'.$imageName);
             $picture->description = $request->description;
             $picture->price = $request->price;
             $picture->save();
@@ -52,6 +47,20 @@ class PictureController extends Controller
         }
 
         
+    }
+
+    public function getPictureById($id){
+        $picture = Picture::find($id);
+        if($picture){
+            return response()->json($picture);
+        }else{
+            return response()->json(
+                [
+                    'success'=>false,
+                    'message'=>'Picture not found'
+                ]
+            );
+        }
     }
 
     public function deletePicture($id){
@@ -77,6 +86,7 @@ class PictureController extends Controller
     public function updatePicture(Request $request, $id){
 
         $picture = Picture::find($id);
+
         if (!$picture) {
             return response()->json(
                 ['message' => 'Picture not found'],
@@ -87,29 +97,30 @@ class PictureController extends Controller
         if ($request->hasFile('image')) {
                         
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads\pictures'), $imageName);
+            $imageName = time() . "_" . trim($image->getClientOriginalName());
+            Storage::putFileAs('public',$image, $imageName);
             
-            $picture->picture_type = $request->picture_type;
-            $picture->image_path = "/uploads/pictures/".$imageName;
-            $picture->description = $request->description;
-            $picture->price = $request->price;
-            $picture->save();
-
-            return response()->json(
-                [
-                    'success'=>true,
-                    'message'=>'Pictured updated successfully'
-                ]
-            );
-        }else{
-            return response()->json(
-                [
-                    'success'=>false,
-                    'message'=>'Cannot update the picture'
-                ]
-            );
+            $picture->image_path = asset('storage/'.$imageName);
+            
         }
 
+        if(!empty($request->picture_type)){
+            $picture->picture_type = $request->picture_type;
+        }
+        if(!empty($request->description)){
+            $picture->description = $request->description;
+        }
+        if(!empty($request->price)){
+            $picture->price = $request->price;
+        }
+        
+        $picture->save();
+
+        return response()->json(
+            [
+                'success'=>true,
+                'message'=>'Pictured updated successfully'
+            ]
+        );
     }
 }
