@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Picture;
+use App\Models\Lookup;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,9 @@ class PictureController extends Controller
 
         foreach($pictures as $pic){
             
-            $type = DB::table('lookup')
-                        ->where('display_name','=','picture_type')
-                        ->where('code','=',$pic->picture_type)->value('value');
+            $type = Lookup::where('display_name','=','picture_type')
+                        ->where('code','=',$pic->picture_type)
+                        ->value('value');
             
             $pic->picture_type = $type;
         }
@@ -135,5 +136,12 @@ class PictureController extends Controller
                 'message'=>'Pictured updated successfully'
             ]
         );
+    }
+
+    public function getPictureTypes(){
+
+        $types = Lookup::where('display_name','=','picture_type')->get();
+        return response()->json($types);
+
     }
 }

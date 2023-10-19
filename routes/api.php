@@ -27,12 +27,14 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::get('pictures', [PictureController::class, 'getAllPictures']);
 Route::post('addPicture', [PictureController::class, 'addPicture']);
 Route::get('/picture/{id}', [PictureController::class, 'getPictureById']);
+Route::get('pictureTypes', [PictureController::class, 'getPictureTypes']);
 Route::get('/pictures/delete/{id}', [PictureController::class, 'deletePicture']);
 Route::post('/pictures/update/{id}', [PictureController::class, 'updatePicture']);
 
 Route::get('frames', [FrameController::class, 'getAllFrames']);
 Route::post('addFrame', [FrameController::class, 'addFrame']);
 Route::get('/frame/{id}', [FrameController::class, 'getFrameById']);
+Route::get('frameTypes', [FrameController::class, 'getFrameTypes']);
 Route::get('/frames/delete/{id}', [FrameController::class, 'deleteFrame']);
 Route::post('/frames/update/{id}', [FrameController::class, 'updateFrame']);
 

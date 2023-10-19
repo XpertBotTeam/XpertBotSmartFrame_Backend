@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Frames;
+use App\Models\Lookup;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -18,14 +19,15 @@ class FrameController extends Controller
 
         foreach($frames as $frame){
             
-            $type = DB::table('lookup')
-                        ->where('display_name','=','frame_type')
-                        ->where('code','=',$frame->frame_type)->value('value');
+            $type = Lookup::where('display_name','=','frame_type')
+                          ->where('code','=',$frame->frame_type)
+                          ->value('value');
             
             $frame->frame_type = $type;
         }
 
-        return $frames;
+        // return $frames; 
+        return response()->json($frames);
     }
 
     public function getFrameById($id){
@@ -128,5 +130,12 @@ class FrameController extends Controller
                 'message'=>'Frame updated successfully'
             ]
         );
+    }
+
+    public function getFrameTypes(){
+
+        $types = Lookup::where('display_name','=','frame_type')->get();
+        return response()->json($types);
+
     }
 }
