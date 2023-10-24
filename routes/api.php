@@ -22,32 +22,33 @@ use App\Http\Controllers\API\CustomizedArtController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout']);
 
-Route::get('pictures', [PictureController::class, 'getAllPictures']);
-Route::post('addPicture', [PictureController::class, 'addPicture']);
-Route::get('/picture/{id}', [PictureController::class, 'getPictureById']);
-Route::get('pictureTypes', [PictureController::class, 'getPictureTypes']);
-Route::delete('/pictures/{id}', [PictureController::class, 'deletePicture']);
-Route::put('/pictures/{id}', [PictureController::class, 'updatePicture']);
+Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);
 
-Route::get('frames', [FrameController::class, 'getAllFrames']);
-Route::post('addFrame', [FrameController::class, 'addFrame']);
-Route::get('/frame/{id}', [FrameController::class, 'getFrameById']);
-Route::get('frameTypes', [FrameController::class, 'getFrameTypes']);
-Route::delete('/frames/{id}', [FrameController::class, 'deleteFrame']);
-Route::put('/frames/{id}', [FrameController::class, 'updateFrame']);
+Route::middleware('auth:api')->get('pictures', [PictureController::class, 'getAllPictures']);
+Route::middleware('auth:api')->post('addPicture', [PictureController::class, 'addPicture']);
+Route::middleware('auth:api')->get('/picture/{id}', [PictureController::class, 'getPictureById']);
+Route::middleware('auth:api')->get('pictureTypes', [PictureController::class, 'getPictureTypes']);
+Route::middleware('auth:api')->delete('/pictures/{id}', [PictureController::class, 'deletePicture']);
+Route::middleware('auth:api')->put('/pictures/{id}', [PictureController::class, 'updatePicture']);
 
-Route::get('orders', [OrderController::class, 'getAllOrders']);
-Route::post('addOrder', [OrderController::class, 'addOrder']);
-Route::get('/order/{id}', [OrderController::class, 'getOrderById']);
-Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
-Route::put('/orders/{id}', [OrderController::class, 'updateOrder']);
+Route::middleware('auth:api')->get('frames', [FrameController::class, 'getAllFrames']);
+Route::middleware('auth:api')->post('addFrame', [FrameController::class, 'addFrame']);
+Route::middleware('auth:api')->get('/frame/{id}', [FrameController::class, 'getFrameById']);
+Route::middleware('auth:api')->get('frameTypes', [FrameController::class, 'getFrameTypes']);
+Route::middleware('auth:api')->delete('/frames/{id}', [FrameController::class, 'deleteFrame']);
+Route::middleware('auth:api')->put('/frames/{id}', [FrameController::class, 'updateFrame']);
 
-Route::get('customizedArt', [CustomizedArtController::class, 'getAllcustomizedArt']);
-Route::post('addCustomizedArt', [CustomizedArtController::class, 'addCustomizedArt']);
-Route::delete('/customizedArt/{id}', [CustomizedArtController::class, 'deleteCustomizedArt']);
-Route::put('/customizedArt/{id}', [CustomizedArtController::class, 'updateCustomizedArt']);
+Route::middleware('auth:api')->get('orders', [OrderController::class, 'getAllOrders']);
+Route::middleware('auth:api')->post('addOrder', [OrderController::class, 'addOrder']);
+Route::middleware('auth:api')->get('/order/{id}', [OrderController::class, 'getOrderById']);
+Route::middleware('auth:api')->delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
+Route::middleware('auth:api')->put('/orders/{id}', [OrderController::class, 'updateOrder']);
+
+Route::middleware('auth:api')->get('customizedArt', [CustomizedArtController::class, 'getAllcustomizedArt']);
+Route::middleware('auth:api')->post('addCustomizedArt', [CustomizedArtController::class, 'addCustomizedArt']);
+Route::middleware('auth:api')->delete('/customizedArt/{id}', [CustomizedArtController::class, 'deleteCustomizedArt']);
+Route::middleware('auth:api')->put('/customizedArt/{id}', [CustomizedArtController::class, 'updateCustomizedArt']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

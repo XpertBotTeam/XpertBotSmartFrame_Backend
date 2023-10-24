@@ -21,9 +21,7 @@ class AuthController extends Controller
         if(Auth::attempt($credentials))
         {
             $user = Auth::user();
-            $access_token = $user->createToken('authToken')->plainTextToken;
-            // Log::info($access_token);
-            $user->remember_token = $access_token;
+            $access_token =  $user->createToken('MyApp')->accessToken;;
 
             Log::info("token....... ".$access_token);
             $user->save();
@@ -85,19 +83,10 @@ class AuthController extends Controller
 
     public function logout(Request $request){
 
-        // $user = $request->user();
-        // Log::info($user);
-        // $user->remember_token = null;
-        // $user->currentAccessToken()->delete();
+        $user = Auth::user();
+        Log::info($user);
+        $user->token()->revoke();
+        return response()->json(['message' => 'Successfully logged out']);
 
-        // $request->user()->token()->revoke();
-
-        
-        Auth()->logout();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User logged out successfully',
-        ]);
     }
 }

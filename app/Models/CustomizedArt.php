@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CustomizedArt extends Model
 {
     use HasFactory;
+    
+    protected $table='customized__art';
 
     public function pictures(){
         return $this->hasMany(Picture::class);

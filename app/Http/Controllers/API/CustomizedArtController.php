@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CustomizedArt;
+use App\Models\Frames;
+use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class CustomizedArtController extends Controller
