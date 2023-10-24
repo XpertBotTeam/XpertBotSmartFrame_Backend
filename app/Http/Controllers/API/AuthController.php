@@ -5,12 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Lookup;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function login(Request $request){
+
+        Log::info($request);
     
         $credentials = $request->only(['email', 'password']);
 
@@ -20,11 +24,17 @@ class AuthController extends Controller
             $access_token = $user->createToken('authToken')->plainTextToken;
             // Log::info($access_token);
             $user->remember_token = $access_token;
+
+            Log::info("token....... ".$access_token);
             $user->save();
+
+            $user_role = Lookup::where('code','=',$user->user_role)->where('display_name','=','user_role')->first()->value;
+
             return response()->json(
                 [
                     'success'=>true,
                     'token'=>$access_token,
+                    'user_role'=>$user_role,
                     'message'=>'User logged in successfully'
                 ]
                 );
