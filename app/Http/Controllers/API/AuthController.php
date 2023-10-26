@@ -32,6 +32,8 @@ class AuthController extends Controller
                 [
                     'success'=>true,
                     'token'=>$access_token,
+                    'first_name'=>$user->first_name,
+                    'last_name'=>$user->last_name,
                     'user_role'=>$user_role,
                     'message'=>'User logged in successfully'
                 ]
@@ -40,7 +42,7 @@ class AuthController extends Controller
             return response()->json(
                 [
                     'success'=>false,
-                    'message'=>'Wrong username or password'
+                    'message'=>'Wrong email or password'
                 ]
                 );
         }

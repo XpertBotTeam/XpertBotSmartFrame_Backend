@@ -7,6 +7,7 @@ use App\Http\Controllers\API\PictureController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\FrameController;
 use App\Http\Controllers\API\CustomizedArtController;
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,8 @@ Route::middleware('auth:api')->post('addCustomizedArt', [CustomizedArtController
 Route::middleware('auth:api')->delete('/customizedArt/{id}', [CustomizedArtController::class, 'deleteCustomizedArt']);
 Route::middleware('auth:api')->put('/customizedArt/{id}', [CustomizedArtController::class, 'updateCustomizedArt']);
 
+Route::middleware('auth:api')->post('addFeedback', [UserController::class, 'addFeedback']);
+Route::middleware('auth:api')->get('feedbacks', [UserController::class, 'getFeedbacks']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
